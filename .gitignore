@@ -17,6 +17,7 @@ venv.bak/
 /build/
 /build_debug/
 /legobin/
+/deps/
 *.swp
 LEGO1PROGRESS.*
 ISLEPROGRESS.*
