@@ -122,19 +122,32 @@ public:
 	void RemoveDonut(Act3Ammo& p_p);
 	MxResult ShootPizza(LegoPathController* p_controller, Vector3& p_location, Vector3& p_direction, Vector3& p_up);
 	MxResult ShootDonut(LegoPathController* p_controller, Vector3& p_location, Vector3& p_direction, Vector3& p_up);
+	void FUN_10072ad0(undefined4 p_param1);
+	MxResult FUN_10073360(Act3Ammo& p_ammo, const Vector3& p_param2);
+	MxResult FUN_10073390(Act3Ammo& p_ammo, const Vector3& p_param2);
 	void SetBrickster(Act3Brickster* p_brickster);
+	void AddCop(Act3Cop* p_cop);
 	void FUN_10073400();
 	void FUN_10073430();
-	void GoodEnding(const Matrix4& p_matrix);
-	static void DebugPrintf(const char* p_format, ...);
+	void GoodEnding(const Matrix4& p_destination);
 
-	// BETA indicates that the actors access certain members directly.
+	// BETA indicates that the following classes access certain members directly.
+	friend class Act3Ammo;
 	friend class Act3Brickster;
 	friend class Act3Cop;
 	friend class Act3Shark;
 
 protected:
 	MxLong HandleTransitionEnd();
+
+	static void DebugPrintf(const char* p_format, ...);
+	static void DebugCopter(
+		const Matrix4& p_copter,
+		const Matrix4& p_destination,
+		const Matrix4& p_startPosition,
+		const Matrix4& p_endPosition,
+		const UnknownMx4DPointFloat& p_unk0x1f4
+	);
 
 	Act3State* m_state;                 // 0xf8
 	Act3Ammo m_pizzas[MAX_PIZZAS];      // 0xfc
@@ -146,12 +159,12 @@ protected:
 	Helicopter* m_copter;               // 0x420c
 	Act3Shark* m_shark;                 // 0x4210
 	MxFloat m_time;                     // 0x4214
-	undefined m_unk0x4218;              // 0x4218
-	undefined m_unk0x4219;              // 0x4219
-	undefined m_unk0x421a;              // 0x421a
-	undefined m_unk0x421b;              // 0x421b
-	undefined m_unk0x421c;              // 0x421c
-	undefined m_unk0x421d;              // 0x421d
+	MxU8 m_unk0x4218;                   // 0x4218
+	MxU8 m_unk0x4219;                   // 0x4219
+	MxU8 m_unk0x421a;                   // 0x421a
+	MxU8 m_unk0x421b;                   // 0x421b
+	MxU8 m_unk0x421c;                   // 0x421c
+	MxU8 m_unk0x421d;                   // 0x421d
 	undefined m_unk0x421e;              // 0x421e
 	Act3List m_unk0x4220;               // 0x4220
 	MxPresenter* m_helicopterDots[15];  // 0x4230

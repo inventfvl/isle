@@ -14,6 +14,17 @@ class LegoWorld;
 // SIZE 0x178
 class Act3Actor : public LegoAnimActor {
 public:
+	struct Act3CopDest {
+		// name verified by BETA10 0x10018776
+		const char* m_bName; // 0x00
+
+		// name verified by BETA10 0x100187cb
+		LegoPathBoundary* m_boundary; // 0x04
+
+		MxFloat m_unk0x08[3]; // 0x08
+		MxFloat m_unk0x14[3]; // 0x14
+	};
+
 	Act3Actor();
 
 	// FUNCTION: LEGO1 0x100431b0
@@ -50,7 +61,7 @@ public:
 	Act3Cop();
 
 	void ParseAction(char* p_extra) override;           // vtable+0x20
-	void VTable0x70(float p_time) override;             // vtable+0x70
+	void Animate(float p_time) override;                // vtable+0x70
 	MxResult HitActor(LegoPathActor*, MxBool) override; // vtable+0x94
 	MxResult VTable0x9c() override;                     // vtable+0x9c
 
@@ -58,15 +69,20 @@ public:
 
 	void SetUnknown0x20(MxFloat p_unk0x20) { m_unk0x20 = p_unk0x20; }
 
-	void FUN_10040360();
+	MxResult FUN_10040350(Act3Ammo& p_ammo, const Vector3&);
+	MxResult FUN_10040360();
 
 	// SYNTHETIC: LEGO1 0x10043120
 	// Act3Cop::`scalar deleting destructor'
 
 private:
-	MxFloat m_unk0x20;       // 0x20
-	LegoWorld* m_world;      // 0x24
-	undefined4 m_unk0x28[2]; // 0x28
+	MxFloat m_unk0x20;  // 0x20
+	LegoWorld* m_world; // 0x24
+
+	// name verified by BETA10 0x10018aa1
+	LegoAnimActorStruct* m_eatAnim; // 0x28
+
+	undefined4 m_unk0x2c; // 0x2c
 };
 
 // VTABLE: LEGO1 0x100d7838 LegoPathActor
@@ -78,7 +94,7 @@ public:
 	~Act3Brickster() override;
 
 	void ParseAction(char* p_extra) override;                          // vtable+0x20
-	void VTable0x70(float p_time) override;                            // vtable+0x70
+	void Animate(float p_time) override;                               // vtable+0x70
 	MxResult HitActor(LegoPathActor* p_actor, MxBool p_bool) override; // vtable+0x94
 	void SwitchBoundary(
 		LegoPathBoundary*& p_boundary,
@@ -95,6 +111,7 @@ public:
 	void SetUnknown0x24(MxFloat p_unk0x24) { m_unk0x24 = p_unk0x24; }
 	void SetUnknown0x50(MxFloat p_unk0x50) { m_unk0x50 = p_unk0x50; }
 
+	MxResult FUN_100417a0(Act3Ammo& p_ammo, const Vector3&);
 	MxResult FUN_100417c0();
 
 	// SYNTHETIC: LEGO1 0x10043250
@@ -128,8 +145,8 @@ public:
 		return "Act3Shark";
 	}
 
-	void ParseAction(char*) override;       // vtable+0x20
-	void VTable0x70(float p_time) override; // vtable+0x70
+	void ParseAction(char*) override;    // vtable+0x20
+	void Animate(float p_time) override; // vtable+0x70
 
 	// LegoAnimActor vtable
 	virtual MxResult FUN_10042ce0(Act3Ammo* p_ammo); // vtable+0x10
@@ -143,7 +160,7 @@ public:
 
 private:
 	list<Act3Ammo*> m_unk0x1c;      // 0x1c
-	undefined4 m_unk0x28;           // 0x28
+	Act3Ammo* m_unk0x28;            // 0x28
 	MxFloat m_unk0x2c;              // 0x2c
 	LegoWorld* m_world;             // 0x30
 	LegoAnimActorStruct* m_unk0x34; // 0x34
@@ -159,6 +176,9 @@ private:
 
 // TEMPLATE: LEGO1 0x10042c90
 // List<Act3Ammo *>::~List<Act3Ammo *>
+
+// TEMPLATE: LEGO1 0x10042ee0
+// list<Act3Ammo *,allocator<Act3Ammo *> >::erase
 
 // GLOBAL: LEGO1 0x100d7660
 // Act3Actor::`vbtable'

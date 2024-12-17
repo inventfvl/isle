@@ -13,10 +13,14 @@ struct LegoAnimActorStruct {
 
 	float GetDuration();
 
+	// FUNCTION: BETA10 0x1000fb10
 	float GetUnknown0x00() { return m_unk0x00; }
 
 	// FUNCTION: BETA10 0x10012210
 	LegoAnim* GetAnimTreePtr() { return m_AnimTreePtr; }
+
+	// FUNCTION: BETA10 0x10012240
+	LegoROI** GetROIMap() { return m_roiMap; }
 
 	// TODO: Possibly private
 	float m_unk0x00;              // 0x00
@@ -55,7 +59,7 @@ public:
 
 	void ParseAction(char* p_extra) override;          // vtable+0x20
 	void SetWorldSpeed(MxFloat p_worldSpeed) override; // vtable+0x30
-	void VTable0x70(float p_time) override;            // vtable+0x70
+	void Animate(float p_time) override;               // vtable+0x70
 	void VTable0x74(Matrix4& p_transform) override;    // vtable+0x74
 
 	virtual MxResult FUN_1001c1f0(float& p_und);
