@@ -17,7 +17,7 @@ cls
 nmake
 
 if %ERRORLEVEL% EQU 0 (
-    echo [42mIsle Built!![0m
+    echo [42mIsle Built Successfully!![0m
 	goto deps
 ) else (
 	if %ERRORLEVEL% EQU 1 (
@@ -43,8 +43,8 @@ if %ERRORLEVEL% EQU 0 (
 
 :deps
 echo Copying game dependencies into build folder...
-xcopy /s "..\deps" "..\build"
+xcopy /s "..\deps" "..\build" > nul
 goto done
 
 :done
-pause
+echo Build complete
