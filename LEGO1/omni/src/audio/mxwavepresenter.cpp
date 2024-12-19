@@ -159,10 +159,10 @@ void MxWavePresenter::StartingTickle()
 		desc.dwSize = sizeof(desc);
 
 		if (m_is3d) {
-			desc.dwFlags = DSBCAPS_CTRLFREQUENCY | DSBCAPS_CTRL3D | DSBCAPS_CTRLVOLUME;
+			desc.dwFlags = DSBCAPS_CTRLFREQUENCY | DSBCAPS_CTRL3D | DSBCAPS_CTRLVOLUME | DSBCAPS_GLOBALFOCUS;
 		}
 		else {
-			desc.dwFlags = DSBCAPS_CTRLFREQUENCY | DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME;
+			desc.dwFlags = DSBCAPS_CTRLFREQUENCY | DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME | DSBCAPS_GLOBALFOCUS;
 		}
 
 		if (m_action->GetFlags() & MxDSAction::c_looping) {

@@ -616,7 +616,7 @@ MxResult IsleApp::SetupWindow(HINSTANCE hInstance, LPSTR lpCmdLine)
 			WS_EX_APPWINDOW,
 			WNDCLASS_NAME,
 			WINDOW_TITLE,
-			WS_CAPTION | WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX,
+			WS_CAPTION | WS_SYSMENU | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_THICKFRAME,
 			CW_USEDEFAULT,
 			CW_USEDEFAULT,
 			g_windowRect.right - g_windowRect.left + 1,
@@ -822,11 +822,6 @@ inline void IsleApp::Tick(BOOL sleepIfNotNextFrame)
 
 	// GLOBAL: ISLE 0x4101bc
 	static int g_startupDelay = 200;
-
-	if (!m_windowActive) {
-		Sleep(0);
-		return;
-	}
 
 	if (!Lego()) {
 		return;

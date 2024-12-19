@@ -286,11 +286,6 @@ void LegoVideoManager::ToggleFPS(MxBool p_visible)
 // FUNCTION: LEGO1 0x1007b770
 MxResult LegoVideoManager::Tickle()
 {
-	if (m_unk0x554 && !m_videoParam.Flags().GetFlipSurfaces() &&
-		TransitionManager()->GetTransitionType() == MxTransitionManager::e_idle) {
-		Sleep(30);
-	}
-
 	m_stopWatch->Stop();
 	m_elapsedSeconds = m_stopWatch->ElapsedSeconds();
 	m_stopWatch->Reset();
