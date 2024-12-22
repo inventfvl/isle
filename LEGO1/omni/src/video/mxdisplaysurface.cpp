@@ -331,6 +331,10 @@ void MxDisplaySurface::VTable0x28(
 	MxS32 p_height
 )
 {
+	if (!p_bitmap) {
+		return;
+	}
+
 	if (!GetRectIntersection(
 			p_bitmap->GetBmiWidth(),
 			p_bitmap->GetBmiHeightAbs(),
@@ -494,6 +498,10 @@ void MxDisplaySurface::VTable0x30(
 	MxBool p_und
 )
 {
+	if (!p_bitmap) {
+		return;
+	}
+
 	if (!GetRectIntersection(
 			p_bitmap->GetBmiWidth(),
 			p_bitmap->GetBmiHeightAbs(),
@@ -826,6 +834,10 @@ LPDIRECTDRAWSURFACE MxDisplaySurface::VTable0x44(
 	LPDIRECTDRAWSURFACE surface = NULL;
 	LPDIRECTDRAW draw = MVideoManager()->GetDirectDraw();
 	MxVideoParamFlags& flags = MVideoManager()->GetVideoParam().Flags();
+	
+	if (!p_bitmap) {
+		return NULL;
+	}
 
 	DDSURFACEDESC ddsd;
 	memset(&ddsd, 0, sizeof(ddsd));

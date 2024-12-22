@@ -215,8 +215,18 @@ void IsleApp::SetupVideoFlags(
 	char* deviceId
 )
 {
+	if (!fullScreen && flipSurfaces)
+	{
+		MessageBoxA(
+			NULL,
+			"The setting 'Flip Video Memory Pages' is incompatible with windowed mode, and will be disabled.",
+			"LEGO\xAE Island Error",
+			MB_OK
+		);
+	}
+
 	m_videoParam.Flags().SetFullScreen(fullScreen);
-	m_videoParam.Flags().SetFlipSurfaces(flipSurfaces);
+	m_videoParam.Flags().SetFlipSurfaces(fullScreen && flipSurfaces);
 	m_videoParam.Flags().SetBackBuffers(!backBuffers);
 	m_videoParam.Flags().SetF2bit0(!param_6);
 	m_videoParam.Flags().SetF1bit7(param_7);
