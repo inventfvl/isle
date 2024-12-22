@@ -7,6 +7,7 @@
 #include "mxpoint32.h"
 
 // VTABLE: LEGO1 0x100d57b0
+// VTABLE: BETA10 0x101bb748
 // SIZE 0xc8
 class LegoCameraController : public LegoPointOfViewController {
 public:
@@ -16,6 +17,7 @@ public:
 	MxLong Notify(MxParam& p_param) override; // vtable+04
 
 	// FUNCTION: LEGO1 0x10011ec0
+	// FUNCTION: BETA10 0x1006a950
 	const char* ClassName() const override // vtable+0x0c
 	{
 		// STRING: LEGO1 0x100f0850
@@ -38,6 +40,7 @@ public:
 	void SetWorldTransform(const Vector3& p_at, const Vector3& p_dir, const Vector3& p_up);
 	void FUN_10012290(float p_angle);
 	void FUN_10012320(float p_angle);
+	MxResult FUN_100123b0(Matrix4& p_matrix);
 	void FUN_100123e0(const Matrix4& p_transform, MxU32 p_und);
 	Mx3DPointFloat GetWorldUp();
 	Mx3DPointFloat GetWorldLocation();

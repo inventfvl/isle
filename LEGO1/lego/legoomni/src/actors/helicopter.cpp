@@ -14,6 +14,8 @@
 #include "legoworld.h"
 #include "misc.h"
 #include "mxdebug.h"
+#include "mxmisc.h"
+#include "mxtimer.h"
 #include "mxtransitionmanager.h"
 #include "scripts.h"
 
@@ -384,36 +386,34 @@ void Helicopter::VTable0x74(Matrix4& p_transform)
 // FUNCTION: LEGO1 0x10003ee0
 void Helicopter::Animate(float p_time)
 {
-	MxU32 state = m_state->GetUnkown8();
-	switch (state) {
-	default:
-		LegoPathActor::Animate(p_time);
-		return;
-	case 4:
-	case 5:
-		float f = m_unk0x1f0 - p_time + 3000;
+	if (m_state->m_unk0x08 == 4 || m_state->m_unk0x08 == 5) {
+		float f = m_unk0x1f0 - p_time + 3000.0f;
 		if (f >= 0) {
-			float f2 = f / 3000 + 1;
+			float f2 = f / -3000.0f + 1;
 			if (f2 < 0) {
 				f2 = 0;
 			}
-			if (1.0f < f2) {
+			if (f2 > 1.0f) {
 				f2 = 1.0f;
 			}
-			Vector3 v(m_unk0x160[3]);
+
 			MxMatrix mat;
-			Vector3 v2(m_unk0x1a8[3]);
-			float* loc = m_unk0x1a8[3];
+			Vector3 v1(m_unk0x160[3]);
+			Vector3 v2(mat[3]);
+			Vector3 v3(m_unk0x1a8[3]);
+
 			mat.SetIdentity();
-			m_unk0x1f4.Unknown6(mat, f2);
-			v2.SetVector(loc);
-			v2 -= v;
+			m_unk0x1f4.BETA_1004aaa0(mat, f2);
+
+			v2 = v3;
+			v2 -= v1;
 			v2 *= f2;
-			v2 += v;
+			v2 += v1;
+
 			m_world->GetCamera()->FUN_100123e0(mat, 0);
 		}
 		else {
-			if (state == 4) {
+			if (m_state->m_unk0x08 == 4) {
 				((Act3*) m_world)->FUN_10073400();
 			}
 			else {
@@ -423,12 +423,52 @@ void Helicopter::Animate(float p_time)
 			LegoPathActor::m_actorState = c_disabled;
 		}
 	}
+	else {
+		LegoPathActor::Animate(p_time);
+	}
 }
 
-// STUB: LEGO1 0x100042a0
+// FUNCTION: LEGO1 0x100042a0
 void Helicopter::FUN_100042a0(const Matrix4& p_matrix)
 {
-	// TODO
+	MxMatrix local48;
+	MxMatrix local90;
+
+	Vector3 vec1(local48[3]);    // local98  // esp+0x30
+	Vector3 vec2(local90[3]);    // localac  // esp+0x1c
+	Vector3 vec3(m_unk0x1a8[0]); // locala8  // esp+0x20
+	Vector3 vec4(m_unk0x1a8[1]); // localb8  // esp+0x10
+	Vector3 vec5(m_unk0x1a8[2]); // EDI
+	Vector3 vec6(m_unk0x1a8[3]); // locala0  // esp+0x28
+
+	m_world->GetCamera()->FUN_100123b0(local48);
+	m_unk0x1a8.SetIdentity();
+	local90 = p_matrix;
+
+	vec2[1] += 20.0f;
+	vec4 = vec2;
+	vec4 -= vec1;
+	vec4.Unitize();
+
+	vec5[0] = vec5[2] = 0.0f;
+	vec5[1] = -1.0f;
+
+	vec3.EqualsCross(&vec4, &vec5);
+	vec3.Unitize();
+	vec4.EqualsCross(&vec5, &vec3);
+	vec6 = vec2;
+
+	local90 = m_unk0x1a8;
+	m_unk0x160 = local48;
+
+	vec1.Clear();
+	vec2.Clear();
+
+	m_unk0x1f0 = Timer()->GetTime();
+
+	m_unk0x1f4.BETA_1004a9f0(local48);
+	m_unk0x1f4.FUN_10004620(local90);
+	m_unk0x1f4.FUN_10004520();
 }
 
 // FUNCTION: LEGO1 0x10004640

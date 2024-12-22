@@ -416,7 +416,7 @@ void LegoAnimationManager::Suspend()
 		m_animState = (AnimState*) GameState()->CreateState("AnimState");
 	}
 
-	if (m_worldId == 0) {
+	if (m_worldId == LegoOmni::e_act1) {
 		m_animState->InitFromAnims(m_animCount, m_anims, m_lastExtraCharacterId);
 	}
 
@@ -495,7 +495,7 @@ void LegoAnimationManager::Resume()
 void LegoAnimationManager::Init()
 {
 	m_unk0x402 = FALSE;
-	m_worldId = -1;
+	m_worldId = LegoOmni::e_undefined;
 	m_animCount = 0;
 	m_anims = NULL;
 	m_unk0x18 = 0;
@@ -580,7 +580,7 @@ void LegoAnimationManager::EnableCamAnims(MxBool p_enableCamAnims)
 }
 
 // FUNCTION: LEGO1 0x1005f720
-MxResult LegoAnimationManager::LoadWorldInfo(MxS32 p_worldId)
+MxResult LegoAnimationManager::LoadWorldInfo(LegoOmni::World p_worldId)
 {
 	MxResult result = FAILURE;
 	MxS32 i, j, k;
@@ -615,7 +615,7 @@ MxResult LegoAnimationManager::LoadWorldInfo(MxS32 p_worldId)
 			m_animState = (AnimState*) GameState()->CreateState("AnimState");
 		}
 
-		if (m_worldId == 0) {
+		if (m_worldId == LegoOmni::e_act1) {
 			m_animState->InitFromAnims(m_animCount, m_anims, m_lastExtraCharacterId);
 		}
 
@@ -623,7 +623,7 @@ MxResult LegoAnimationManager::LoadWorldInfo(MxS32 p_worldId)
 
 		LegoFile file;
 
-		if (p_worldId == -1) {
+		if (p_worldId == LegoOmni::e_undefined) {
 			result = SUCCESS;
 			goto done;
 		}
@@ -961,7 +961,7 @@ MxResult LegoAnimationManager::FUN_100605e0(
 {
 	MxResult result = FAILURE;
 
-	if (m_worldId != -1 && p_index < m_animCount && m_tranInfoList != NULL) {
+	if (m_worldId != LegoOmni::e_undefined && p_index < m_animCount && m_tranInfoList != NULL) {
 		PurgeExtra(FALSE);
 		FUN_10062770();
 
@@ -1138,7 +1138,7 @@ MxResult LegoAnimationManager::FUN_10060dc0(
 	MxU32 p_objectId,
 	MxMatrix* p_matrix,
 	MxBool p_param3,
-	MxBool p_param4,
+	MxU8 p_param4,
 	LegoROI* p_roi,
 	MxBool p_param6,
 	MxBool p_param7,
@@ -1159,10 +1159,10 @@ MxResult LegoAnimationManager::FUN_10060dc0(
 			MxBool unk0x0a;
 
 			switch (p_param4) {
-			case FALSE:
+			case e_unk0:
 				unk0x0a = m_anims[i].m_unk0x0a;
 				break;
-			case TRUE:
+			case e_unk1:
 				unk0x0a = TRUE;
 				break;
 			default:
@@ -2793,8 +2793,8 @@ void LegoAnimationManager::FUN_100648f0(LegoTranInfo* p_tranInfo, MxLong p_unk0x
 		LegoLocation* location = NavController()->GetLocation(p_tranInfo->m_location);
 		if (location != NULL) {
 			CalcLocalTransform(location->m_position, location->m_direction, location->m_up, m_unk0x484);
-			m_unk0x4cc.Unknown1(m_unk0x43c, m_unk0x484);
-			m_unk0x4cc.Unknown7();
+			m_unk0x4cc.BETA_1004a9b0(m_unk0x43c, m_unk0x484);
+			m_unk0x4cc.FUN_10004520();
 		}
 		else {
 			p_tranInfo->m_flags &= ~LegoTranInfo::c_bit1;
@@ -2828,7 +2828,7 @@ void LegoAnimationManager::FUN_10064b50(MxLong p_time)
 			sub[1] = (m_unk0x484[3][1] - m_unk0x43c[3][1]) * und;
 			sub[2] = (m_unk0x484[3][2] - m_unk0x43c[3][2]) * und;
 
-			m_unk0x4cc.Unknown6(mat, (float) (p_time - m_unk0x434) / 1000.0f);
+			m_unk0x4cc.BETA_1004aaa0(mat, (float) (p_time - m_unk0x434) / 1000.0f);
 
 			VPV3(mat[3], m_unk0x43c[3], sub);
 			mat[3][3] = 1.0f;

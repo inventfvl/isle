@@ -254,7 +254,6 @@ function(add_lego_libraries NAME)
     LEGO1/omni/src/stream/mxdsbuffer.cpp
     LEGO1/omni/src/stream/mxdschunk.cpp
     LEGO1/omni/src/stream/mxdsfile.cpp
-    LEGO1/omni/src/stream/mxdssource.cpp
     LEGO1/omni/src/stream/mxdssubscriber.cpp
     LEGO1/omni/src/stream/mxio.cpp
     LEGO1/omni/src/stream/mxramstreamcontroller.cpp
@@ -564,6 +563,8 @@ if (MSVC_FOR_DECOMP)
     target_link_options(isle PRIVATE "/OPT:REF")
     set_property(TARGET isle ${lego1_targets} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
   endif()
+
+  target_link_options(lego1 PRIVATE "/OPT:REF")
 
   # Equivalent to target_compile_options(... PRIVATE "/MT$<$<CONFIG:Debug>:d>")
   set_property(TARGET lego1 ${lego1_targets} ${beta10_targets} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
